@@ -1,7 +1,7 @@
+#include "Stack.h"
+
 #include <gtest.h>
 
-TEST(NameOfTheTestedClass, just_an_empty_test) {
-
-	EXPECT_EQ(1, 1);
-
+TEST(Stack, can_create_stack) {
+	ASSERT_NO_THROW(Stack<int> stack);
 }
