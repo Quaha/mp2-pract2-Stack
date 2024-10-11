@@ -13,16 +13,21 @@ private:
 	int lup = 0; // last unpushed prev
 	int lun = 0; // last unpushed next
 
-	void destruct() {
-		delete[] prev_stack;
-		delete[] curr_stack;
-		delete[] next_stack;
+	static void destruct(Stack* stack) {
+		delete[] stack->prev_stack;
+		delete[] stack->curr_stack;
+		delete[] stack->next_stack;
 	}
 
-	void construct(Stack* stack) {
+	static void construct(Stack* stack) {
 		stack->prev_stack = new StackType[1];
 		stack->curr_stack = new StackType[2];
 		stack->next_stack = new StackType[4];
+
+		stack->sz = 0;
+		stack->curr_capacity = 2;
+		stack->lup = 0;
+		stack->lun = 0;
 	}
 
 public:
@@ -32,7 +37,7 @@ public:
 	}
 
 	~Stack() {
-		destruct();
+		destruct(this);
 	}
 
 	Stack(const Stack& other) {
@@ -69,7 +74,7 @@ public:
 		return sz;
 	}
 
-	bool empty() {
+	bool empty() const {
 		return sz == 0;
 	}
 };
