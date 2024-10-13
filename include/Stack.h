@@ -126,10 +126,15 @@ public:
 		curr_stack[curr_sz] = value;
 		++curr_sz;
 		
-		next_stack[next_sz] = curr_stack[next_sz];
-		next_stack[next_sz + 1] = curr_stack[next_sz + 1];
+		if (prev_sz == 0) {
+			next_stack[next_sz] = curr_stack[next_sz];
+			next_stack[next_sz + 1] = curr_stack[next_sz + 1];
+			next_sz += 2;
+		}
+		else {
+			--prev_sz;
+		}
 
-		next_sz += 2;
 
 		if (curr_sz == curr_capacity) {
 			delete[] prev_stack;

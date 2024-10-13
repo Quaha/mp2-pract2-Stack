@@ -51,3 +51,20 @@ TEST(Stack, combination_of_push_and_pop_1) {
 		stack.pop_back();
 	}
 }
+
+TEST(Stack, combination_of_push_and_pop_2) {
+	Stack<int> stack;
+
+	for (int i = 0; i < 16; i++) {
+		ASSERT_NO_THROW(stack.push_back(i));
+	}
+
+	ASSERT_NO_THROW(stack.pop_back());
+	for (int i = 0; i < 20; i++) {
+		ASSERT_NO_THROW(stack.push_back(i));
+	}
+
+	while (!stack.empty()) {
+		ASSERT_NO_THROW(stack.pop_back());
+	}
+}
