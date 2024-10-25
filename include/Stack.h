@@ -13,13 +13,13 @@ private:
 	int curr_sz = 1; // there is a fake element in order to simplify the implementation
 	int next_sz = 0;
 
-	void destruct(Stack* stack) {
+	void destruct(Stack *stack) {
 		delete[] stack->prev_stack;
 		delete[] stack->curr_stack;
 		delete[] stack->next_stack;
 	}
 
-	void construct(Stack* stack) {
+	void construct(Stack *stack) {
 		stack->prev_stack = new StackType[1]();
 		stack->curr_stack = new StackType[2]();
 		stack->next_stack = new StackType[4]();
@@ -43,24 +43,24 @@ public:
 	Stack(const Stack& other) {
 		this->curr_capacity = other.curr_capacity;
 
-		this->prev_stack = new StackType[curr_capacity / 2];
-		this->prev_stack = new StackType[curr_capacity];
-		this->prev_stack = new StackType[curr_capacity * 2];
-
-		this->curr_sz = other.curr_sz;
 		this->prev_sz = other.prev_sz;
+		this->curr_sz = other.curr_sz;
 		this->next_sz = other.next_sz;
 
+		this->prev_stack = new StackType[prev_sz];
+		this->curr_stack = new StackType[curr_sz];
+		this->next_stack = new StackType[next_sz];
+
 		for (int i = 0; i < prev_sz; ++i) {
-			this->prev_stack = other.prev_stack[i];
+			this->prev_stack[i] = other.prev_stack[i];
 		}
 
 		for (int i = 0; i < curr_sz; ++i) {
-			this->curr_stack = other.curr_stack[i];
+			this->curr_stack[i] = other.curr_stack[i];
 		}
 
 		for (int i = 0; i < next_sz; ++i) {
-			this->next_stack = other.next_stack[i];
+			this->next_stack[i] = other.next_stack[i];
 		}
 	}
 
@@ -75,37 +75,40 @@ public:
 		this->prev_sz = other.prev_sz;
 		this->next_sz = other.next_sz;
 
-		construct(other);
+		construct(&other);
 	}
 
 	Stack& operator=(const Stack& other) {
-		if (this == &other) return;
+		if (this == &other) return *this;
 
 		this->curr_capacity = other.curr_capacity;
 
-		this->prev_stack = new StackType[curr_capacity / 2];
-		this->prev_stack = new StackType[curr_capacity];
-		this->prev_stack = new StackType[curr_capacity * 2];
-
-		this->curr_sz = other.curr_sz;
 		this->prev_sz = other.prev_sz;
+		this->curr_sz = other.curr_sz;
 		this->next_sz = other.next_sz;
 
+		this->prev_stack = new StackType[prev_sz];
+		this->curr_stack = new StackType[curr_sz];
+		this->next_stack = new StackType[next_sz];
+
+
 		for (int i = 0; i < prev_sz; ++i) {
-			this->prev_stack = other.prev_stack[i];
+			this->prev_stack[i] = other.prev_stack[i];
 		}
 
 		for (int i = 0; i < curr_sz; ++i) {
-			this->curr_stack = other.curr_stack[i];
+			this->curr_stack[i] = other.curr_stack[i];
 		}
 
 		for (int i = 0; i < next_sz; ++i) {
-			this->next_stack = other.next_stack[i];
+			this->next_stack[i] = other.next_stack[i];
 		}
+
+		return *this;
 	}
 
 	Stack& operator=(Stack&& other) {
-		if (this == &other) return;
+		if (this == &other) return *this;
 
 		destruct(this);
 
@@ -119,7 +122,9 @@ public:
 		this->prev_sz = other.prev_sz;
 		this->next_sz = other.next_sz;
 
-		construct(other);
+		construct(&other);
+
+		return *this;
 	}
 
 	void push_back(const StackType& value) {
