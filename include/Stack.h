@@ -81,6 +81,8 @@ public:
 	Stack& operator=(const Stack& other) {
 		if (this == &other) return *this;
 
+		destruct(this);
+
 		this->curr_capacity = other.curr_capacity;
 
 		this->prev_sz = other.prev_sz;
